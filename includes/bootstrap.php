@@ -81,6 +81,38 @@ function take_flash_message(): ?string
     return is_string($message) ? $message : null;
 }
 
+function render_pagination(int $page, int $pageCount, array $query, string $path = 'index.php'): void
+{
+    if ($pageCount < 2) {
+        return;
+    }
+
+    $pages = [1, $pageCount];
+    for ($number = max(1, $page - 2); $number <= min($pageCount, $page + 2); $number++) {
+        $pages[] = $number;
+    }
+    $pages = array_values(array_unique($pages));
+    sort($pages);
+
+    echo '<nav class="pagination page-links" aria-label="Sayfalar">';
+    if ($page > 1) {
+        echo '<a href="' . e($path . '?' . http_build_query($query + ['page' => $page - 1])) . '">Önceki</a>';
+    }
+    $previous = 0;
+    foreach ($pages as $number) {
+        if ($number > $previous + 1) {
+            echo '<span aria-hidden="true">…</span>';
+        }
+        $class = $number === $page ? ' class="current" aria-current="page"' : '';
+        echo '<a' . $class . ' href="' . e($path . '?' . http_build_query($query + ['page' => $number])) . '">' . $number . '</a>';
+        $previous = $number;
+    }
+    if ($page < $pageCount) {
+        echo '<a href="' . e($path . '?' . http_build_query($query + ['page' => $page + 1])) . '">Sonraki</a>';
+    }
+    echo '</nav>';
+}
+
 function valid_contact(array $input): array
 {
     $contact = [];
