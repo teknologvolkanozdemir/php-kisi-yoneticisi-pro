@@ -16,8 +16,8 @@ $where = ['is_hidden = 0'];
 $parameters = [];
 
 if ($search !== '') {
-    $where[] = '(ad LIKE :ad OR soyad LIKE :soyad OR telefon LIKE :telefon OR email LIKE :email)';
-    $prefix = $search . '%';
+    $where[] = "(ad LIKE :ad ESCAPE '=' OR soyad LIKE :soyad ESCAPE '=' OR telefon LIKE :telefon ESCAPE '=' OR email LIKE :email ESCAPE '=')";
+    $prefix = prefix_search_pattern($search);
     $parameters = ['ad' => $prefix, 'soyad' => $prefix, 'telefon' => $prefix, 'email' => $prefix];
 }
 $whereSql = implode(' AND ', $where);

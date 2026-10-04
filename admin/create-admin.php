@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-require dirname(__DIR__) . '/includes/bootstrap.php';
-
 if (PHP_SAPI !== 'cli') {
     http_response_code(404);
     exit;
 }
 
+require dirname(__DIR__) . '/includes/bootstrap.php';
+
 $username = trim($argv[1] ?? '');
-if ($username === '' || strlen($username) > 80 || !stream_isatty(STDIN)) {
+if ($username === '' || mb_strlen($username) > 80 || !stream_isatty(STDIN)) {
     fwrite(STDERR, "Kullanım: php admin/create-admin.php <kullanıcı_adı> (etkileşimli terminal gerekir)\n");
     exit(1);
 }

@@ -93,8 +93,8 @@ if ($visibility === 'visible') {
     $where[] = 'is_hidden = 1';
 }
 if ($search !== '') {
-    $where[] = '(ad LIKE :ad OR soyad LIKE :soyad OR telefon LIKE :telefon OR email LIKE :email)';
-    $prefix = $search . '%';
+    $where[] = "(ad LIKE :ad ESCAPE '=' OR soyad LIKE :soyad ESCAPE '=' OR telefon LIKE :telefon ESCAPE '=' OR email LIKE :email ESCAPE '=')";
+    $prefix = prefix_search_pattern($search);
     $parameters = ['ad' => $prefix, 'soyad' => $prefix, 'telefon' => $prefix, 'email' => $prefix];
 }
 $whereSql = $where === [] ? '' : ' WHERE ' . implode(' AND ', $where);

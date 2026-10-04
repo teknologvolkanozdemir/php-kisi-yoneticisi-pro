@@ -48,6 +48,11 @@ function input_string(array $source, string $key): string
     return is_scalar($value) ? (string) $value : '';
 }
 
+function prefix_search_pattern(string $value): string
+{
+    return strtr($value, ['=' => '==', '%' => '=%', '_' => '=_']) . '%';
+}
+
 function csrf_token(): string
 {
     if (empty($_SESSION['csrf_token'])) {
@@ -136,6 +141,9 @@ function valid_contact(array $input): array
     if (mb_strlen($contact['ad']) > 100 || mb_strlen($contact['soyad']) > 100
         || mb_strlen($contact['telefon']) > 40 || mb_strlen($contact['email']) > 254) {
         throw new InvalidArgumentException('Ad, soyad, telefon veya e-posta alanı çok uzun.');
+    }
+    if (strlen($contact['adres']) > 65535 || strlen($contact['notlar']) > 65535) {
+        throw new InvalidArgumentException('Adres veya notlar alanı çok uzun.');
     }
     if ($contact['email'] !== '' && !filter_var($contact['email'], FILTER_VALIDATE_EMAIL)) {
         throw new InvalidArgumentException('Geçerli bir e-posta adresi girin.');

@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS contacts (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_contacts_name (ad, soyad),
+    INDEX idx_contacts_surname (soyad),
     INDEX idx_contacts_phone (telefon),
     INDEX idx_contacts_email (email),
     INDEX idx_contacts_visibility_created (is_hidden, created_at, id)
