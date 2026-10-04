@@ -20,7 +20,7 @@ if ($editId > 0) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf();
-    $action = (string) ($_POST['action'] ?? '');
+    $action = input_string($_POST, 'action');
     $id = max(0, (int) ($_POST['id'] ?? 0));
     try {
         if ($action === 'save') {
@@ -72,11 +72,11 @@ $totals = $pdo->query(
      FROM contacts'
 )->fetch();
 
-$search = trim((string) ($_GET['q'] ?? ''));
+$search = trim(input_string($_GET, 'q'));
 if (mb_strlen($search) > 100) {
     $search = mb_substr($search, 0, 100);
 }
-$visibility = (string) ($_GET['visibility'] ?? 'all');
+$visibility = input_string($_GET, 'visibility') ?: 'all';
 if (!in_array($visibility, ['all', 'visible', 'hidden'], true)) {
     $visibility = 'all';
 }

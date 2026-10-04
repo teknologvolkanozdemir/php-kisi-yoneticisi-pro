@@ -17,12 +17,12 @@ if (!$admin) {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verify_csrf();
-    $current = (string) ($_POST['current_password'] ?? '');
-    $newPassword = (string) ($_POST['new_password'] ?? '');
-    $confirmation = (string) ($_POST['confirm_password'] ?? '');
+    $current = input_string($_POST, 'current_password');
+    $newPassword = input_string($_POST, 'new_password');
+    $confirmation = input_string($_POST, 'confirm_password');
     if (!password_verify($current, $admin['password_hash'])) {
         $error = 'Mevcut şifreniz hatalı.';
-    } elseif (strlen($newPassword) < 12) {
+    } elseif (mb_strlen($newPassword) < 12) {
         $error = 'Yeni şifre en az 12 karakter olmalıdır.';
     } elseif ($newPassword !== $confirmation) {
         $error = 'Yeni şifreler eşleşmiyor.';

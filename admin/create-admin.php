@@ -9,9 +9,18 @@ if (PHP_SAPI !== 'cli') {
 }
 
 $username = trim($argv[1] ?? '');
-$password = $argv[2] ?? '';
-if ($username === '' || strlen($username) > 80 || strlen($password) < 12) {
-    fwrite(STDERR, "Kullanım: php admin/create-admin.php <kullanıcı_adı> <en_az_12_karakter_şifre>\n");
+if ($username === '' || strlen($username) > 80 || !stream_isatty(STDIN)) {
+    fwrite(STDERR, "Kullanım: php admin/create-admin.php <kullanıcı_adı> (etkileşimli terminal gerekir)\n");
+    exit(1);
+}
+
+fwrite(STDOUT, "Yeni şifre (en az 12 karakter): ");
+exec('stty -echo');
+$password = trim((string) fgets(STDIN));
+exec('stty echo');
+fwrite(STDOUT, PHP_EOL);
+if (mb_strlen($password) < 12) {
+    fwrite(STDERR, "Şifre en az 12 karakter olmalıdır.\n");
     exit(1);
 }
 

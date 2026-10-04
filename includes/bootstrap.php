@@ -42,6 +42,12 @@ function e(mixed $value): string
     return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+function input_string(array $source, string $key): string
+{
+    $value = $source[$key] ?? '';
+    return is_scalar($value) ? (string) $value : '';
+}
+
 function csrf_token(): string
 {
     if (empty($_SESSION['csrf_token'])) {
@@ -117,7 +123,10 @@ function valid_contact(array $input): array
 {
     $contact = [];
     foreach (['ad', 'soyad', 'telefon', 'email', 'adres', 'notlar'] as $field) {
-        $value = trim((string) ($input[$field] ?? ''));
+        if (isset($input[$field]) && !is_scalar($input[$field])) {
+            throw new InvalidArgumentException('Form alanları geçersiz.');
+        }
+        $value = trim(input_string($input, $field));
         if (in_array($field, ['ad', 'soyad'], true) && $value === '') {
             throw new InvalidArgumentException('Ad ve soyad alanları zorunludur.');
         }

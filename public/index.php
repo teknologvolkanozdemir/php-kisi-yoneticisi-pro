@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 require dirname(__DIR__) . '/includes/bootstrap.php';
 
-$search = trim((string) ($_GET['q'] ?? ''));
+$search = trim(input_string($_GET, 'q'));
 if (mb_strlen($search) > 100) {
     $search = mb_substr($search, 0, 100);
 }
