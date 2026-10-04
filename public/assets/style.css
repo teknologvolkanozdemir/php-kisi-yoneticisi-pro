@@ -1,0 +1,46 @@
+:root {
+    color-scheme: light;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #1f2937;
+    background: #f3f6fa;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #1459a6; }
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem max(1rem, calc((100% - 1100px) / 2));
+    background: #12345a;
+}
+.site-header a { color: #fff; text-decoration: none; margin-right: .75rem; }
+.brand { font-size: 1.2rem; font-weight: 700; }
+.container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+.panel, .card { background: #fff; border: 1px solid #dbe2ea; border-radius: .6rem; padding: 1rem; margin: 1rem 0; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+.stat strong { display: block; font-size: 1.6rem; }
+.toolbar, .pagination, .actions { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; }
+label { display: inline-block; margin: .45rem .4rem .45rem 0; }
+input, select, textarea, button { font: inherit; padding: .55rem .65rem; border: 1px solid #aab5c2; border-radius: .35rem; }
+textarea { width: 100%; min-height: 5rem; }
+button, .button { background: #1459a6; color: white; border: 0; cursor: pointer; text-decoration: none; padding: .6rem .8rem; border-radius: .35rem; }
+.button.secondary, button.secondary { background: #526273; }
+.button.danger, button.danger { background: #a52b35; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: white; }
+th, td { padding: .7rem; text-align: left; border-bottom: 1px solid #dbe2ea; vertical-align: top; }
+.notice { padding: .75rem 1rem; background: #e5f3e8; border-left: 4px solid #32834a; }
+.error { padding: .75rem 1rem; background: #fde8e8; border-left: 4px solid #a52b35; }
+.muted { color: #596579; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .5rem 1rem; }
+.form-grid label { display: block; }
+.form-grid input, .form-grid textarea { width: 100%; }
+.page-links a, .page-links span { display: inline-block; padding: .35rem .55rem; margin: .15rem; border: 1px solid #ccd5df; border-radius: .25rem; }
+.page-links .current { background: #12345a; color: white; }
+@media (max-width: 640px) {
+    .site-header { align-items: flex-start; flex-direction: column; }
+    .container { margin: 1rem auto; }
+}
